@@ -1,5 +1,6 @@
-import Head from 'next/head'
-import styles from '../styles/Home.module.css'
+import Head from 'next/head';
+import Link from 'next/Link';
+import styles from '../styles/Home.module.css';
 import { useEffect, useState } from 'react';
 
 export default function Home() {
@@ -11,7 +12,7 @@ export default function Home() {
 
       setPokemon( await resp.json());
     }
-    
+
     getPokemon();
   }, [])
 
@@ -21,8 +22,21 @@ export default function Home() {
         <title>Pokemondongo</title>
         <link rel="icon" href="/favicon.ico" />
       </Head>
-      <section>
-        {JSON.stringify(pokemon)}
+      <section className={styles.grid}>
+        {
+          pokemon.map( pokemon => (
+            <div className={styles.card} key={pokemon.id}>
+              <Link href={`/pokemon/${pokemon.id}`}>
+                <a>
+                  <img src={`https://studious-octo-parakeet-oh3rwjnti-jamescodesandbox-gmailcom.vercel.app/${pokemon.image}`} alt={pokemon.name}
+                  />
+                  <h3>{pokemon.name}</h3>
+                </a>
+              </Link>
+            </div>
+          ))
+        }
+  
       </section>
     </div>
   )
