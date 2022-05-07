@@ -12,7 +12,7 @@ export default function Details () {
     const [pokemon, setPokemon] = useState(null);
 
     async function getPokemon() {
-            const resp = await fetch(`https://studious-octo-parakeet-oh3rwjnti-jamescodesandbox-gmailcom.vercel.app/pokemon/${id}.json`);
+            const resp = await fetch(`https://studious-octo-parakeet.vercel.app/pokemon/${id}.json`);
             setPokemon( await resp.json());
     }
 

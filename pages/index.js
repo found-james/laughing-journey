@@ -8,7 +8,7 @@ export default function Home() {
 
   async function getPokemon() {
 
-    const resp = await fetch ("https://studious-octo-parakeet-oh3rwjnti-jamescodesandbox-gmailcom.vercel.app/index.json");
+    const resp = await fetch ("https://studious-octo-parakeet.vercel.app/index.json");
 
     setPokemon( await resp.json());
   }
@@ -34,7 +34,7 @@ export default function Home() {
               <Link href={`/pokemon/${pokemon.id}`}>
 
                 <a>
-                  <img src={`https://studious-octo-parakeet-oh3rwjnti-jamescodesandbox-gmailcom.vercel.app/${pokemon.image}`} alt={pokemon.name}
+                  <img src={`https://studious-octo-parakeet.vercel.app//${pokemon.image}`} alt={pokemon.name}
                   />
                   <h3>{pokemon.name}</h3>
                 </a>
