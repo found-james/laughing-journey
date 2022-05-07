@@ -9,41 +9,71 @@ export default function Details () {
         query: { id }
     } = useRouter();
 
-    const [pokemon, setPokemon] = useState({});
+    const [pokemon, setPokemon] = useState(null);
+
+    async function getPokemon() {
+            const resp = await fetch(`https://studious-octo-parakeet-oh3rwjnti-jamescodesandbox-gmailcom.vercel.app/pokemon/${id}.json`);
+            setPokemon( await resp.json());
+    }
 
     useEffect(() => {
-        async function getPokemon() {
-            try {
-            const resp = await fetch(`https://studious-octo-parakeet-oh3rwjnti-jamescodesandbox-gmailcom.vercel.app/pokemon/${id}.json`);
-
-            setPokemon( await resp.json());
-            } catch (err) {
-                console.log(err.message);
-            }
-        }
-
+        
         if (id) {
-            getPokemon();
-        }
-
         getPokemon();
-
-        if (!pokemon) {
-            return null;
         }
 
+        
     }, [id]);
 
-    return (
-        <div>
-            <Head>
-                <title>{pokemon.name}</title>
-            </Head>
+
+    const loaded = () => {
+        return (
             <div>
+              <Head>
+                <title>{pokemon.name}</title>
+              </Head>
+              <div>
                 <Link href="/">
-                    <a>back to home</a>
+                  <a>Back to Home</a>
                 </Link>
+              </div>
+              <div className={styles.layout}>
+                <div>
+                  <img
+                    className={styles.picture}
+                    src={`https://jherr-pokemon.s3.us-west-1.amazonaws.com/${pokemon.image}`}
+                    alt={pokemon.name.english}
+                  />
+                </div>
+                <div>
+                  <div className={styles.name}>{pokemon.name}</div>
+                  <div className={styles.type}>{pokemon.type.join(", ")}</div>
+                  <table>
+                    <thead className={styles.header}>
+                      <tr>
+                        <th>Name</th>
+                        <th>Value</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      {pokemon.stats.map(({ name, value }) => (
+                        <tr key={name}>
+                          <td className={styles.attribute}>{name}</td>
+                          <td>{value}</td>
+                        </tr>
+                      ))}
+                    </tbody>
+                  </table>
+                </div>
+              </div>
             </div>
-        </div>
-    )
+          );
+    }
+
+    const loading = () => {
+        return <p>loading</p>
+    }
+
+    return pokemon && pokemon.name ? loaded () : loading ();
+    
 }
